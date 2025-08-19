@@ -1,0 +1,4 @@
+{
+    "import" : ["username/hashbrown"],
+    "is-main": true
+}
