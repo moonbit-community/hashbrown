@@ -5,6 +5,5 @@
   "repository": "https://github.com/username/hashbrown-moonbit",
   "license": "Apache-2.0",
   "keywords": ["hashmap", "hashset", "swisstable", "data-structures"],
-  "description": "MoonBit port of Google's SwissTable hash map - a high-performance drop-in replacement for standard hash maps",
-  "source": "."
+  "description": "MoonBit port of Google's SwissTable hash map - a high-performance drop-in replacement for standard hash maps"
 }
