@@ -1,6 +1,7 @@
 // Examples demonstrating the HashBrown MoonBit library usage
 
 // Basic HashMap usage example
+
 ///|
 pub fn example_hashmap_basic() -> Unit {
   println("=== HashMap Basic Usage ===")

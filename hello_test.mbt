@@ -2,6 +2,7 @@
 // Tests for HashMap and HashSet implementations
 
 // Basic functionality tests
+
 ///|
 test "hello function" {
   if @hashbrown.hello() != "HashBrown MoonBit - High Performance Hash Maps" {
