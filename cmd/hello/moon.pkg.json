@@ -1,4 +1,4 @@
 {
-    "import" : ["username/hashbrown"],
+    "import" : ["bob/hashbrown"],
     "is-main": true
 }
