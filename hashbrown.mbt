@@ -11,7 +11,7 @@ enum Control {
   Empty
   Deleted
   Full(UInt)
-}
+} derive(Show)
 
 // Core hash map structure using SwissTable algorithm
 
@@ -21,7 +21,7 @@ pub struct HashMap[K, V] {
   mut ctrl : Array[Control]
   mut len : Int
   mut capacity : Int
-}
+} derive(Show)
 
 // Hash set built on top of HashMap
 

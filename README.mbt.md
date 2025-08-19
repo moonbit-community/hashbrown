@@ -18,12 +18,14 @@ This is a port of the Rust [hashbrown](https://github.com/rust-lang/hashbrown) l
 ```moonbit
 test {
   let map : HashMap[Int, String] = HashMap::new()
-  map.insert(1, "one")|>ignore
-  map.insert(2, "two")|>ignore
-  match map.get(1) {
-    Some(value) => println("Found: \{value}")
-    None => println("Not found")
-  }
+  map.insert(1, "one") |> ignore
+  map.insert(2, "two") |> ignore
+  inspect(
+    map,
+    content=(
+      #|{buckets: [None, None, None, None, None, None, Some((2, "two")), Some((1, "one")), None, None, None, None, None, None, None, None], ctrl: [Empty, Empty, Empty, Empty, Empty, Empty, Full(6), Full(55), Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty], len: 2, capacity: 16}
+    ),
+  )
 }
 ```
 
