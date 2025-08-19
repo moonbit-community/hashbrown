@@ -1,0 +1,73 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "username/hashbrown"
+
+// Values
+fn example_collision_handling() -> Unit
+
+fn example_hashmap_basic() -> Unit
+
+fn example_hashmap_custom() -> Unit
+
+fn example_hashset_basic() -> Unit
+
+fn example_iteration() -> Unit
+
+fn example_performance() -> Unit
+
+fn example_set_operations() -> Unit
+
+fn example_word_count() -> Unit
+
+fn hello() -> String
+
+fn run_all_examples() -> Unit
+
+// Errors
+
+// Types and methods
+type Control
+
+pub struct HashMap[K, V] {
+  mut buckets : Array[(K, V)?]
+  mut ctrl : Array[Control]
+  mut len : Int
+  mut capacity : Int
+}
+fn[K, V] HashMap::capacity(Self[K, V]) -> Int
+fn[K, V] HashMap::clear(Self[K, V]) -> Unit
+fn[K : Hash + Eq, V] HashMap::contains_key(Self[K, V], K) -> Bool
+fn[K, V] HashMap::entries(Self[K, V]) -> Array[(K, V)]
+fn[K : Hash + Eq, V] HashMap::get(Self[K, V], K) -> V?
+fn[K : Hash + Eq, V] HashMap::insert(Self[K, V], K, V) -> V?
+fn[K, V] HashMap::is_empty(Self[K, V]) -> Bool
+fn[K, V] HashMap::keys(Self[K, V]) -> Array[K]
+fn[K, V] HashMap::len(Self[K, V]) -> Int
+fn[K, V] HashMap::new() -> Self[K, V]
+fn[K : Hash + Eq, V] HashMap::remove(Self[K, V], K) -> V?
+fn[K, V] HashMap::values(Self[K, V]) -> Array[V]
+fn[K, V] HashMap::with_capacity(Int) -> Self[K, V]
+
+pub struct HashSet[T] {
+  map : HashMap[T, Unit]
+}
+fn[T] HashSet::capacity_set(Self[T]) -> Int
+fn[T] HashSet::clear_set(Self[T]) -> Unit
+fn[T : Hash + Eq] HashSet::contains(Self[T], T) -> Bool
+fn[T : Hash + Eq] HashSet::insert_set(Self[T], T) -> Bool
+fn[T] HashSet::is_empty_set(Self[T]) -> Bool
+fn[T] HashSet::len_set(Self[T]) -> Int
+fn[T] HashSet::new() -> Self[T]
+fn[T : Hash + Eq] HashSet::remove_set(Self[T], T) -> Bool
+fn[T] HashSet::values_set(Self[T]) -> Array[T]
+fn[T] HashSet::with_capacity(Int) -> Self[T]
+
+// Type aliases
+
+// Traits
+pub trait Hash {
+  hash(Self) -> UInt
+}
+impl Hash for Int
+impl Hash for UInt
+impl Hash for String
+
