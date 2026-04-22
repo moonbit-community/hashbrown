@@ -220,7 +220,7 @@ fn[K : Hash + Eq, V] HashMap::resize(self : HashMap[K, V]) -> Unit {
 pub fn[K : Hash + Eq, V] HashMap::insert(
   self : HashMap[K, V],
   key : K,
-  value : V
+  value : V,
 ) -> V? {
   // Check if we need to resize
   if self.len >= (self.capacity.to_double() * load_factor).to_int() {
@@ -268,7 +268,7 @@ pub fn[K : Hash + Eq, V] HashMap::get(self : HashMap[K, V], key : K) -> V? {
 ///|
 pub fn[K : Hash + Eq, V] HashMap::contains_key(
   self : HashMap[K, V],
-  key : K
+  key : K,
 ) -> Bool {
   match self.find_slot(key) {
     Some(_) => true

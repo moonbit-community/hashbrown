@@ -15,7 +15,8 @@ This is a port of the Rust [hashbrown](https://github.com/rust-lang/hashbrown) l
 
 ## Usage
 
-```moonbit
+```moonbit nocheck
+///|
 test {
   let map : HashMap[Int, String] = HashMap::new()
   map.insert(1, "one") |> ignore
