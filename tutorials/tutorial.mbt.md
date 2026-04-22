@@ -63,7 +63,7 @@ test "checking_keys" {
     println("We have widgets in stock!")
   }
 
-  if not(inventory.contains_key("gadgets")) {
+  if !inventory.contains_key("gadgets") {
     println("No gadgets available")
   }
 }
@@ -207,7 +207,7 @@ test "basic_hashset" {
   }
 
   // Trying to insert the same value again
-  if not(unique_words.insert_set("hello")) {
+  if !unique_words.insert_set("hello") {
     println("'hello' already exists")
   }
 
@@ -232,7 +232,7 @@ test "set_operations" {
     println("Rust is in our set")
   }
 
-  if not(programming_languages.contains("Java")) {
+  if !programming_languages.contains("Java") {
     println("Java is not in our set")
   }
 

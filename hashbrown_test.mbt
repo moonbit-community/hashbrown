@@ -15,7 +15,7 @@ test "hello function" {
 ///|
 test "hashmap_new_empty" {
   let map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::new()
-  if not(map.is_empty()) {
+  if !map.is_empty() {
     fail("New HashMap should be empty")
   }
   if map.len() != 0 {
@@ -59,7 +59,7 @@ test "hashmap_contains_key" {
     fail("Empty map should not contain any keys")
   }
   ignore(map.insert(1, "one"))
-  if not(map.contains_key(1)) {
+  if !map.contains_key(1) {
     fail("Map should contain inserted key")
   }
   if map.contains_key(2) {
@@ -100,7 +100,7 @@ test "hashmap_remove" {
 ///|
 test "hashset_new_empty" {
   let set : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
-  if not(set.is_empty_set()) {
+  if !set.is_empty_set() {
     fail("New HashSet should be empty")
   }
   if set.len_set() != 0 {
@@ -113,7 +113,7 @@ test "hashset_insert_and_contains" {
   let set : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
 
   // Test insert new value
-  if not(set.insert_set(1)) {
+  if !set.insert_set(1) {
     fail("Insert of new value should return true")
   }
   if set.len_set() != 1 {
@@ -124,7 +124,7 @@ test "hashset_insert_and_contains" {
   }
 
   // Test contains
-  if not(set.contains(1)) {
+  if !set.contains(1) {
     fail("Set should contain inserted value")
   }
   if set.contains(2) {
@@ -152,7 +152,7 @@ test "hashset_remove" {
   // Insert and remove
   ignore(set.insert_set(1))
   ignore(set.insert_set(2))
-  if not(set.remove_set(1)) {
+  if !set.remove_set(1) {
     fail("Remove of existing value should return true")
   }
   if set.len_set() != 1 {
@@ -161,7 +161,7 @@ test "hashset_remove" {
   if set.contains(1) {
     fail("Removed value should not exist")
   }
-  if not(set.contains(2)) {
+  if !set.contains(2) {
     fail("Other values should still exist")
   }
 

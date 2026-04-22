@@ -92,7 +92,7 @@ pub fn example_hashset_basic() -> Unit {
   }
 
   // Try to insert duplicate
-  if not(set.insert_set("rust")) {
+  if !set.insert_set("rust") {
     println("'rust' already exists in set")
   }
   println("Set length: \{set.len_set()}")
@@ -101,7 +101,7 @@ pub fn example_hashset_basic() -> Unit {
   if set.contains("moonbit") {
     println("Set contains 'moonbit'")
   }
-  if not(set.contains("python")) {
+  if !set.contains("python") {
     println("Set does not contain 'python'")
   }
 
@@ -268,7 +268,7 @@ pub fn example_set_operations() -> Unit {
   if languages.contains("rust") {
     println("Rust is in the languages set")
   }
-  if not(frameworks.contains("rust")) {
+  if !frameworks.contains("rust") {
     println("Rust is not in the frameworks set")
   }
   println("")
