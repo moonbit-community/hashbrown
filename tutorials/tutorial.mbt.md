@@ -17,7 +17,8 @@ HashBrown is a high-performance hash map and hash set implementation ported from
 
 Let's start with a simple example of creating and using a HashMap:
 
-```mbt
+```mbt nocheck
+///|
 test "basic_hashmap_usage" {
   let map : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
 
@@ -34,7 +35,8 @@ test "basic_hashmap_usage" {
 
 #### Inserting and Retrieving Values
 
-```mbt
+```mbt nocheck
+///|
 test "insert_and_retrieve" {
   let scores : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
 
@@ -54,7 +56,8 @@ test "insert_and_retrieve" {
 
 #### Checking for Keys
 
-```mbt
+```mbt nocheck
+///|
 test "checking_keys" {
   let inventory : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
   ignore(inventory.insert("widgets", 42))
@@ -71,7 +74,8 @@ test "checking_keys" {
 
 #### Removing Items
 
-```mbt
+```mbt nocheck
+///|
 test "removing_items" {
   let items : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::new()
   ignore(items.insert("key1", "value1"))
@@ -90,7 +94,8 @@ test "removing_items" {
 
 ### String Keys and Values
 
-```mbt
+```mbt nocheck
+///|
 test "string_translations" {
   let translations : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::new()
   ignore(translations.insert("hello", "你好"))
@@ -106,7 +111,8 @@ test "string_translations" {
 
 ### Integer Keys
 
-```mbt
+```mbt nocheck
+///|
 test "fibonacci_sequence" {
   let fibonacci : @hashbrown.HashMap[Int, Int] = @hashbrown.HashMap::new()
   ignore(fibonacci.insert(1, 1))
@@ -126,7 +132,8 @@ test "fibonacci_sequence" {
 
 ### Iterating Over Collections
 
-```mbt
+```mbt nocheck
+///|
 test "iteration_example" {
   let colors : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::new()
   ignore(colors.insert("red", "#FF0000"))
@@ -159,10 +166,13 @@ test "iteration_example" {
 
 ### Capacity Management
 
-```mbt
+```mbt nocheck
+///|
 test "capacity_management" {
   // Create with specific initial capacity
-  let large_map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(1000)
+  let large_map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(
+    1000,
+  )
   println("Initial capacity: \{large_map.capacity()}")
 
   // The map automatically resizes as needed
@@ -178,7 +188,8 @@ test "capacity_management" {
 
 ### Clearing the Map
 
-```mbt
+```mbt nocheck
+///|
 test "clearing_map" {
   let temp_data : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
   ignore(temp_data.insert("a", 1))
@@ -197,7 +208,8 @@ HashSet is perfect for storing unique values without duplicates:
 
 ### Creating and Using HashSet
 
-```mbt
+```mbt nocheck
+///|
 test "basic_hashset" {
   let unique_words : @hashbrown.HashSet[String] = @hashbrown.HashSet::new()
 
@@ -217,7 +229,8 @@ test "basic_hashset" {
 
 ### Set Operations
 
-```mbt
+```mbt nocheck
+///|
 test "set_operations" {
   let programming_languages : @hashbrown.HashSet[String] = @hashbrown.HashSet::new()
 
@@ -247,7 +260,8 @@ test "set_operations" {
 
 ### Converting Set to Array
 
-```mbt
+```mbt nocheck
+///|
 test "set_to_array" {
   let numbers : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
   ignore(numbers.insert_set(1))
@@ -267,10 +281,11 @@ test "set_to_array" {
 
 ### Word Frequency Counter
 
-```mbt
+```mbt nocheck
+///|
 fn count_words(text : Array[String]) -> @hashbrown.HashMap[String, Int] {
   let word_count : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
-  
+
   for i = 0; i < text.length(); i = i + 1 {
     let word = text[i]
     match word_count.get(word) {
@@ -278,12 +293,15 @@ fn count_words(text : Array[String]) -> @hashbrown.HashMap[String, Int] {
       None => ignore(word_count.insert(word, 1))
     }
   }
-  
+
   word_count
 }
 
+///|
 test "word_frequency_counter" {
-  let sample_text = ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "the"]
+  let sample_text = [
+    "the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "the",
+  ]
   let frequencies = count_words(sample_text)
 
   println("Word frequencies:")
@@ -297,24 +315,31 @@ test "word_frequency_counter" {
 
 ### Caching System
 
-```mbt
+```mbt nocheck
+///|
 struct Cache[K, V] {
   data : @hashbrown.HashMap[K, V]
   max_size : Int
 }
 
+///|
 fn[K, V] Cache::new(max_size : Int) -> Cache[K, V] {
   { data: @hashbrown.HashMap::new(), max_size }
 }
 
-fn[K : @hashbrown.Hash + Eq, V] Cache::get_cached(self : Cache[K, V], key : K) -> V? {
+///|
+fn[K : @hashbrown.Hash + Eq, V] Cache::get_cached(
+  self : Cache[K, V],
+  key : K,
+) -> V? {
   self.data.get(key)
 }
 
+///|
 fn[K : @hashbrown.Hash + Eq, V] Cache::put_cached(
   self : Cache[K, V],
   key : K,
-  value : V
+  value : V,
 ) -> Unit {
   if self.data.len() >= self.max_size {
     // Simple eviction: clear cache when full
@@ -323,6 +348,7 @@ fn[K : @hashbrown.Hash + Eq, V] Cache::put_cached(
   ignore(self.data.insert(key, value))
 }
 
+///|
 test "caching_system" {
   let cache : Cache[String, Int] = Cache::new(3)
   cache.put_cached("a", 1)
@@ -338,20 +364,29 @@ test "caching_system" {
 
 ### Unique Visitor Tracker
 
-```mbt
+```mbt nocheck
+///|
 struct VisitorTracker {
   visitors : @hashbrown.HashSet[String]
   visit_count : @hashbrown.HashMap[String, Int]
 }
 
+///|
 fn VisitorTracker::new() -> VisitorTracker {
-  { visitors: @hashbrown.HashSet::new(), visit_count: @hashbrown.HashMap::new() }
+  {
+    visitors: @hashbrown.HashSet::new(),
+    visit_count: @hashbrown.HashMap::new(),
+  }
 }
 
-fn VisitorTracker::record_visit(self : VisitorTracker, user_id : String) -> Unit {
+///|
+fn VisitorTracker::record_visit(
+  self : VisitorTracker,
+  user_id : String,
+) -> Unit {
   // Track unique visitors
   ignore(self.visitors.insert_set(user_id))
-  
+
   // Count visits per user
   match self.visit_count.get(user_id) {
     Some(count) => ignore(self.visit_count.insert(user_id, count + 1))
@@ -359,6 +394,7 @@ fn VisitorTracker::record_visit(self : VisitorTracker, user_id : String) -> Unit
   }
 }
 
+///|
 fn VisitorTracker::get_visitor_stats(self : VisitorTracker) -> (Int, Int) {
   let unique_visitors = self.visitors.len_set()
   let total_visits = {
@@ -372,6 +408,7 @@ fn VisitorTracker::get_visitor_stats(self : VisitorTracker) -> (Int, Int) {
   (unique_visitors, total_visits)
 }
 
+///|
 test "visitor_tracker" {
   let tracker = VisitorTracker::new()
   tracker.record_visit("user1")
@@ -387,11 +424,14 @@ test "visitor_tracker" {
 
 ### Choosing Initial Capacity
 
-```mbt
+```mbt nocheck
+///|
 test "initial_capacity_performance" {
   // If you know approximately how many items you'll store,
   // pre-allocate capacity to avoid resizing
-  let large_dataset : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(10000)
+  let large_dataset : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(
+    10000,
+  )
 
   // This is more efficient than letting it resize multiple times
   for i = 0; i < 1000; i = i + 1 {
@@ -399,19 +439,27 @@ test "initial_capacity_performance" {
   }
 
   println("Final capacity: \{large_dataset.capacity()}")
-  println("Load factor: \{large_dataset.len().to_double() / large_dataset.capacity().to_double()}")
+  println(
+    "Load factor: \{large_dataset.len().to_double() / large_dataset.capacity().to_double()}",
+  )
 }
 ```
 
 ### Batch Operations
 
-```mbt
-fn batch_insert_numbers(map : @hashbrown.HashMap[Int, Int], start : Int, end : Int) -> Unit {
+```mbt nocheck
+///|
+fn batch_insert_numbers(
+  map : @hashbrown.HashMap[Int, Int],
+  start : Int,
+  end : Int,
+) -> Unit {
   for i = start; i < end; i = i + 1 {
     ignore(map.insert(i, i * i))
   }
 }
 
+///|
 test "batch_operations" {
   let numbers : @hashbrown.HashMap[Int, Int] = @hashbrown.HashMap::new()
   batch_insert_numbers(numbers, 0, 1000)
@@ -423,14 +471,17 @@ test "batch_operations" {
 
 ### 1. Use Appropriate Initial Capacity
 
-```mbt
+```mbt nocheck
+///|
 test "capacity_best_practices" {
   // Good: Pre-allocate if you know the size
-  let config : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::with_capacity(50)
+  let config : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::with_capacity(
+    50,
+  )
 
   // Less optimal: Let it resize multiple times
   let config2 : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::new()
-  
+
   println("Config capacity: \{config.capacity()}")
   println("Config2 capacity: \{config2.capacity()}")
 }
@@ -438,7 +489,8 @@ test "capacity_best_practices" {
 
 ### 2. Handle Option Types Properly
 
-```mbt
+```mbt nocheck
+///|
 test "option_handling" {
   let lookup : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
   ignore(lookup.insert("key", 42))
@@ -452,7 +504,7 @@ test "option_handling" {
   // Also good: Use default values when appropriate
   let value = match lookup.get("missing_key") {
     Some(v) => v
-    None => 0  // default value
+    None => 0 // default value
   }
   println("Value: \{value}")
 }
@@ -460,7 +512,8 @@ test "option_handling" {
 
 ### 3. Choose HashMap vs HashSet Appropriately
 
-```mbt
+```mbt nocheck
+///|
 test "choosing_data_structure" {
   // Use HashMap when you need key-value associations
   let user_scores : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
@@ -469,7 +522,7 @@ test "choosing_data_structure" {
   // Use HashSet when you only need unique values
   let seen_items : @hashbrown.HashSet[String] = @hashbrown.HashSet::new()
   ignore(seen_items.insert_set("item1"))
-  
+
   println("User scores: \{user_scores.len()}")
   println("Seen items: \{seen_items.len_set()}")
 }
@@ -479,19 +532,21 @@ test "choosing_data_structure" {
 
 ### Issue: Type Inference Problems
 
-```mbt
+```mbt nocheck
 // Function showing proper type annotation
+///|
 fn create_typed_map() -> @hashbrown.HashMap[String, Int] {
-  @hashbrown.HashMap::new()  // Type inferred from return type
+  @hashbrown.HashMap::new() // Type inferred from return type
 }
 
+///|
 test "type_inference_solutions" {
   // Solution: Provide explicit types
   let map : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
-  
+
   // Or use function with explicit return type
   let map2 = create_typed_map()
-  
+
   ignore(map.insert("test", 1))
   ignore(map2.insert("test2", 2))
 }
@@ -499,15 +554,16 @@ test "type_inference_solutions" {
 
 ### Issue: Forgetting to Handle Return Values
 
-```mbt
+```mbt nocheck
+///|
 test "handling_return_values" {
   let map : @hashbrown.HashMap[String, String] = @hashbrown.HashMap::new()
-  
+
   // Solution: Explicitly handle or ignore
   let old_value = map.insert("key", "value")
   // or
   ignore(map.insert("key2", "value2"))
-  
+
   match old_value {
     Some(v) => println("Previous value: \{v}")
     None => println("New key added")

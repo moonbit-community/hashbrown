@@ -1,0 +1,7 @@
+import {
+  "bob/hashbrown",
+}
+
+options(
+  "is-main": true,
+)

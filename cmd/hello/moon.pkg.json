@@ -1,4 +1,0 @@
-{
-    "import" : ["bob/hashbrown"],
-    "is-main": true
-}
