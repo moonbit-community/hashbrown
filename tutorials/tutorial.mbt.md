@@ -534,6 +534,7 @@ test "choosing_data_structure" {
 
 ```mbt nocheck
 // Function showing proper type annotation
+
 ///|
 fn create_typed_map() -> @hashbrown.HashMap[String, Int] {
   @hashbrown.HashMap::new() // Type inferred from return type
