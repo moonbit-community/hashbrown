@@ -52,7 +52,7 @@ pub impl Hash for Int with hash(self : Int) -> UInt {
 ///|
 pub impl Hash for String with hash(self : String) -> UInt {
   let mut hash = 2166136261_U
-  let bytes = self.to_bytes()
+  let bytes = @utf8.encode(self)
   for i = 0; i < bytes.length(); i = i + 1 {
     hash = hash ^ bytes[i].to_uint()
     hash = hash * 16777619_U
