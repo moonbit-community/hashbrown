@@ -307,11 +307,15 @@ fn[K, V] Cache::new(max_size : Int) -> Cache[K, V] {
   { data: @hashbrown.HashMap::new(), max_size }
 }
 
-fn[K : @hashbrown.Hash + Eq, V] get_cached(self : Cache[K, V], key : K) -> V? {
+fn[K : @hashbrown.Hash + Eq, V] Cache::get_cached(self : Cache[K, V], key : K) -> V? {
   self.data.get(key)
 }
 
-fn[K : @hashbrown.Hash + Eq, V] put_cached(self : Cache[K, V], key : K, value : V) -> Unit {
+fn[K : @hashbrown.Hash + Eq, V] Cache::put_cached(
+  self : Cache[K, V],
+  key : K,
+  value : V
+) -> Unit {
   if self.data.len() >= self.max_size {
     // Simple eviction: clear cache when full
     self.data.clear()
@@ -344,7 +348,7 @@ fn VisitorTracker::new() -> VisitorTracker {
   { visitors: @hashbrown.HashSet::new(), visit_count: @hashbrown.HashMap::new() }
 }
 
-fn record_visit(self : VisitorTracker, user_id : String) -> Unit {
+fn VisitorTracker::record_visit(self : VisitorTracker, user_id : String) -> Unit {
   // Track unique visitors
   ignore(self.visitors.insert_set(user_id))
   
@@ -355,7 +359,7 @@ fn record_visit(self : VisitorTracker, user_id : String) -> Unit {
   }
 }
 
-fn get_visitor_stats(self : VisitorTracker) -> (Int, Int) {
+fn VisitorTracker::get_visitor_stats(self : VisitorTracker) -> (Int, Int) {
   let unique_visitors = self.visitors.len_set()
   let total_visits = {
     let mut total = 0

@@ -118,22 +118,22 @@ pub fn[K, V] HashMap::with_capacity(capacity : Int) -> HashMap[K, V] {
 }
 
 ///|
-pub fn[K, V] len(self : HashMap[K, V]) -> Int {
+pub fn[K, V] HashMap::len(self : HashMap[K, V]) -> Int {
   self.len
 }
 
 ///|
-pub fn[K, V] is_empty(self : HashMap[K, V]) -> Bool {
+pub fn[K, V] HashMap::is_empty(self : HashMap[K, V]) -> Bool {
   self.len == 0
 }
 
 ///|
-pub fn[K, V] capacity(self : HashMap[K, V]) -> Int {
+pub fn[K, V] HashMap::capacity(self : HashMap[K, V]) -> Int {
   self.capacity
 }
 
 ///|
-pub fn[K, V] clear(self : HashMap[K, V]) -> Unit {
+pub fn[K, V] HashMap::clear(self : HashMap[K, V]) -> Unit {
   for i = 0; i < self.capacity; i = i + 1 {
     self.buckets[i] = None
     self.ctrl[i] = Control::Empty
@@ -144,7 +144,7 @@ pub fn[K, V] clear(self : HashMap[K, V]) -> Unit {
 // Find the slot for a key
 
 ///|
-fn[K : Hash + Eq, V] find_slot(self : HashMap[K, V], key : K) -> Int? {
+fn[K : Hash + Eq, V] HashMap::find_slot(self : HashMap[K, V], key : K) -> Int? {
   let (hash, target_ctrl) = hash_key(key)
   let mask = self.capacity - 1
   let mut pos = (hash & mask.reinterpret_as_uint()).reinterpret_as_int()
@@ -175,7 +175,7 @@ fn[K : Hash + Eq, V] find_slot(self : HashMap[K, V], key : K) -> Int? {
 // Find an empty slot for insertion
 
 ///|
-fn[K, V] find_empty_slot(self : HashMap[K, V], hash : UInt) -> Int {
+fn[K, V] HashMap::find_empty_slot(self : HashMap[K, V], hash : UInt) -> Int {
   let mask = self.capacity - 1
   let mut pos = (hash & mask.reinterpret_as_uint()).reinterpret_as_int()
   let mut count = 0
@@ -194,7 +194,7 @@ fn[K, V] find_empty_slot(self : HashMap[K, V], hash : UInt) -> Int {
 // Resize the hash map when load factor is exceeded
 
 ///|
-fn[K : Hash + Eq, V] resize(self : HashMap[K, V]) -> Unit {
+fn[K : Hash + Eq, V] HashMap::resize(self : HashMap[K, V]) -> Unit {
   let old_buckets = self.buckets
   let old_ctrl = self.ctrl
   let old_capacity = self.capacity
@@ -217,7 +217,11 @@ fn[K : Hash + Eq, V] resize(self : HashMap[K, V]) -> Unit {
 }
 
 ///|
-pub fn[K : Hash + Eq, V] insert(self : HashMap[K, V], key : K, value : V) -> V? {
+pub fn[K : Hash + Eq, V] HashMap::insert(
+  self : HashMap[K, V],
+  key : K,
+  value : V
+) -> V? {
   // Check if we need to resize
   if self.len >= (self.capacity.to_double() * load_factor).to_int() {
     self.resize()
@@ -250,7 +254,7 @@ pub fn[K : Hash + Eq, V] insert(self : HashMap[K, V], key : K, value : V) -> V? 
 }
 
 ///|
-pub fn[K : Hash + Eq, V] get(self : HashMap[K, V], key : K) -> V? {
+pub fn[K : Hash + Eq, V] HashMap::get(self : HashMap[K, V], key : K) -> V? {
   match self.find_slot(key) {
     Some(pos) =>
       match self.buckets[pos] {
@@ -262,7 +266,10 @@ pub fn[K : Hash + Eq, V] get(self : HashMap[K, V], key : K) -> V? {
 }
 
 ///|
-pub fn[K : Hash + Eq, V] contains_key(self : HashMap[K, V], key : K) -> Bool {
+pub fn[K : Hash + Eq, V] HashMap::contains_key(
+  self : HashMap[K, V],
+  key : K
+) -> Bool {
   match self.find_slot(key) {
     Some(_) => true
     None => false
@@ -270,7 +277,7 @@ pub fn[K : Hash + Eq, V] contains_key(self : HashMap[K, V], key : K) -> Bool {
 }
 
 ///|
-pub fn[K : Hash + Eq, V] remove(self : HashMap[K, V], key : K) -> V? {
+pub fn[K : Hash + Eq, V] HashMap::remove(self : HashMap[K, V], key : K) -> V? {
   match self.find_slot(key) {
     Some(pos) =>
       match self.buckets[pos] {
@@ -287,7 +294,7 @@ pub fn[K : Hash + Eq, V] remove(self : HashMap[K, V], key : K) -> V? {
 }
 
 ///|
-pub fn[K, V] keys(self : HashMap[K, V]) -> Array[K] {
+pub fn[K, V] HashMap::keys(self : HashMap[K, V]) -> Array[K] {
   let result = []
   for i = 0; i < self.capacity; i = i + 1 {
     match self.ctrl[i] {
@@ -303,7 +310,7 @@ pub fn[K, V] keys(self : HashMap[K, V]) -> Array[K] {
 }
 
 ///|
-pub fn[K, V] values(self : HashMap[K, V]) -> Array[V] {
+pub fn[K, V] HashMap::values(self : HashMap[K, V]) -> Array[V] {
   let result = []
   for i = 0; i < self.capacity; i = i + 1 {
     match self.ctrl[i] {
@@ -319,7 +326,7 @@ pub fn[K, V] values(self : HashMap[K, V]) -> Array[V] {
 }
 
 ///|
-pub fn[K, V] entries(self : HashMap[K, V]) -> Array[(K, V)] {
+pub fn[K, V] HashMap::entries(self : HashMap[K, V]) -> Array[(K, V)] {
   let result = []
   for i = 0; i < self.capacity; i = i + 1 {
     match self.ctrl[i] {
@@ -347,27 +354,27 @@ pub fn[T] HashSet::with_capacity(capacity : Int) -> HashSet[T] {
 }
 
 ///|
-pub fn[T] len_set(self : HashSet[T]) -> Int {
+pub fn[T] HashSet::len_set(self : HashSet[T]) -> Int {
   self.map.len()
 }
 
 ///|
-pub fn[T] is_empty_set(self : HashSet[T]) -> Bool {
+pub fn[T] HashSet::is_empty_set(self : HashSet[T]) -> Bool {
   self.map.is_empty()
 }
 
 ///|
-pub fn[T] capacity_set(self : HashSet[T]) -> Int {
+pub fn[T] HashSet::capacity_set(self : HashSet[T]) -> Int {
   self.map.capacity()
 }
 
 ///|
-pub fn[T] clear_set(self : HashSet[T]) -> Unit {
+pub fn[T] HashSet::clear_set(self : HashSet[T]) -> Unit {
   self.map.clear()
 }
 
 ///|
-pub fn[T : Hash + Eq] insert_set(self : HashSet[T], value : T) -> Bool {
+pub fn[T : Hash + Eq] HashSet::insert_set(self : HashSet[T], value : T) -> Bool {
   match self.map.insert(value, ()) {
     Some(_) => false
     None => true
@@ -375,12 +382,12 @@ pub fn[T : Hash + Eq] insert_set(self : HashSet[T], value : T) -> Bool {
 }
 
 ///|
-pub fn[T : Hash + Eq] contains(self : HashSet[T], value : T) -> Bool {
+pub fn[T : Hash + Eq] HashSet::contains(self : HashSet[T], value : T) -> Bool {
   self.map.contains_key(value)
 }
 
 ///|
-pub fn[T : Hash + Eq] remove_set(self : HashSet[T], value : T) -> Bool {
+pub fn[T : Hash + Eq] HashSet::remove_set(self : HashSet[T], value : T) -> Bool {
   match self.map.remove(value) {
     Some(_) => true
     None => false
@@ -388,7 +395,7 @@ pub fn[T : Hash + Eq] remove_set(self : HashSet[T], value : T) -> Bool {
 }
 
 ///|
-pub fn[T] values_set(self : HashSet[T]) -> Array[T] {
+pub fn[T] HashSet::values_set(self : HashSet[T]) -> Array[T] {
   self.map.keys()
 }
 
