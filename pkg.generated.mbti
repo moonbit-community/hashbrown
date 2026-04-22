@@ -1,0 +1,77 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "bob/hashbrown"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn example_collision_handling() -> Unit
+
+pub fn example_hashmap_basic() -> Unit
+
+pub fn example_hashmap_custom() -> Unit
+
+pub fn example_hashset_basic() -> Unit
+
+pub fn example_iteration() -> Unit
+
+pub fn example_performance() -> Unit
+
+pub fn example_set_operations() -> Unit
+
+pub fn example_word_count() -> Unit
+
+pub fn hello() -> String
+
+pub fn run_all_examples() -> Unit
+
+// Errors
+
+// Types and methods
+type Control derive(@debug.Debug)
+
+pub struct HashMap[K, V] {
+  mut buckets : Array[(K, V)?]
+  mut ctrl : Array[Control]
+  mut len : Int
+  mut capacity : Int
+} derive(@debug.Debug)
+pub fn[K, V] HashMap::capacity(Self[K, V]) -> Int
+pub fn[K, V] HashMap::clear(Self[K, V]) -> Unit
+pub fn[K : Hash + Eq, V] HashMap::contains_key(Self[K, V], K) -> Bool
+pub fn[K, V] HashMap::entries(Self[K, V]) -> Array[(K, V)]
+pub fn[K : Hash + Eq, V] HashMap::get(Self[K, V], K) -> V?
+pub fn[K : Hash + Eq, V] HashMap::insert(Self[K, V], K, V) -> V?
+pub fn[K, V] HashMap::is_empty(Self[K, V]) -> Bool
+pub fn[K, V] HashMap::keys(Self[K, V]) -> Array[K]
+pub fn[K, V] HashMap::len(Self[K, V]) -> Int
+pub fn[K, V] HashMap::new() -> Self[K, V]
+pub fn[K : Hash + Eq, V] HashMap::remove(Self[K, V], K) -> V?
+pub fn[K, V] HashMap::values(Self[K, V]) -> Array[V]
+pub fn[K, V] HashMap::with_capacity(Int) -> Self[K, V]
+
+pub struct HashSet[T] {
+  map : HashMap[T, Unit]
+}
+pub fn[T] HashSet::capacity_set(Self[T]) -> Int
+pub fn[T] HashSet::clear_set(Self[T]) -> Unit
+pub fn[T : Hash + Eq] HashSet::contains(Self[T], T) -> Bool
+pub fn[T : Hash + Eq] HashSet::insert_set(Self[T], T) -> Bool
+pub fn[T] HashSet::is_empty_set(Self[T]) -> Bool
+pub fn[T] HashSet::len_set(Self[T]) -> Int
+pub fn[T] HashSet::new() -> Self[T]
+pub fn[T : Hash + Eq] HashSet::remove_set(Self[T], T) -> Bool
+pub fn[T] HashSet::values_set(Self[T]) -> Array[T]
+pub fn[T] HashSet::with_capacity(Int) -> Self[T]
+
+// Type aliases
+
+// Traits
+pub trait Hash {
+  hash(Self) -> UInt
+}
+pub impl Hash for Int
+pub impl Hash for UInt
+pub impl Hash for String
+
