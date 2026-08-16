@@ -13,6 +13,9 @@ enum Control {
   Full(UInt)
 } derive(Debug)
 
+///|
+pub extend Control with @debug.Debug::{to_repr}
+
 // Core hash map structure using SwissTable algorithm
 
 ///|
@@ -22,6 +25,9 @@ pub struct HashMap[K, V] {
   mut len : Int
   mut capacity : Int
 } derive(Debug)
+
+///|
+pub extend HashMap with @debug.Debug::{to_repr}
 
 // Hash set built on top of HashMap
 
