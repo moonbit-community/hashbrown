@@ -30,6 +30,7 @@ pub fn run_all_examples() -> Unit
 
 // Types and methods
 type Control derive(@debug.Debug)
+pub fn Control::to_repr(Self) -> @debug.Repr
 
 pub struct HashMap[K, V] {
   mut buckets : Array[(K, V)?]
@@ -48,6 +49,7 @@ pub fn[K, V] HashMap::keys(Self[K, V]) -> Array[K]
 pub fn[K, V] HashMap::len(Self[K, V]) -> Int
 pub fn[K, V] HashMap::new() -> Self[K, V]
 pub fn[K : Hash + Eq, V] HashMap::remove(Self[K, V], K) -> V?
+pub fn[K : @debug.Debug, V : @debug.Debug] HashMap::to_repr(Self[K, V]) -> @debug.Repr
 pub fn[K, V] HashMap::values(Self[K, V]) -> Array[V]
 pub fn[K, V] HashMap::with_capacity(Int) -> Self[K, V]
 
