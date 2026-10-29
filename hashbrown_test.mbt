@@ -14,7 +14,7 @@ test "hello function" {
 
 ///|
 test "hashmap_new_empty" {
-  let map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::new()
   if !map.is_empty() {
     fail("New HashMap should be empty")
   }
@@ -28,7 +28,7 @@ test "hashmap_new_empty" {
 
 ///|
 test "hashmap_insert_and_get" {
-  let map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::new()
 
   // Test insert new key
   match map.insert(1, "one") {
@@ -54,7 +54,7 @@ test "hashmap_insert_and_get" {
 
 ///|
 test "hashmap_contains_key" {
-  let map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::new()
   if map.contains_key(1) {
     fail("Empty map should not contain any keys")
   }
@@ -69,7 +69,7 @@ test "hashmap_contains_key" {
 
 ///|
 test "hashmap_remove" {
-  let map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::new()
 
   // Test remove from empty map
   match map.remove(1) {
@@ -99,7 +99,7 @@ test "hashmap_remove" {
 
 ///|
 test "hashset_new_empty" {
-  let set : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
+  let set : @hashbrown.HashSet[Int32] = @hashbrown.HashSet::new()
   if !set.is_empty_set() {
     fail("New HashSet should be empty")
   }
@@ -110,7 +110,7 @@ test "hashset_new_empty" {
 
 ///|
 test "hashset_insert_and_contains" {
-  let set : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
+  let set : @hashbrown.HashSet[Int32] = @hashbrown.HashSet::new()
 
   // Test insert new value
   if !set.insert_set(1) {
@@ -142,7 +142,7 @@ test "hashset_insert_and_contains" {
 
 ///|
 test "hashset_remove" {
-  let set : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
+  let set : @hashbrown.HashSet[Int32] = @hashbrown.HashSet::new()
 
   // Test remove from empty set
   if set.remove_set(1) {
@@ -175,7 +175,7 @@ test "hashset_remove" {
 
 ///|
 test "hashmap_string_keys" {
-  let map : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
   ignore(map.insert("hello", 1))
   ignore(map.insert("world", 2))
   ignore(map.insert("", 3)) // empty string
@@ -196,7 +196,7 @@ test "hashmap_string_keys" {
 
 ///|
 test "hashmap_stress_test" {
-  let map : @hashbrown.HashMap[Int, Int] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[Int32, Int32] = @hashbrown.HashMap::new()
 
   // Insert many values
   for i = 0; i < 100; i = i + 1 {

@@ -10,7 +10,7 @@ let load_factor = 0.875
 enum Control {
   Empty
   Deleted
-  Full(UInt)
+  Full(UInt32)
 } derive(Debug)
 
 // Core hash map structure using SwissTable algorithm
@@ -19,8 +19,8 @@ enum Control {
 pub struct HashMap[K, V] {
   mut buckets : Array[(K, V)?]
   mut ctrl : Array[Control]
-  mut len : Int
-  mut capacity : Int
+  mut len : Int32
+  mut capacity : Int32
 } derive(Debug)
 
 // Hash set built on top of HashMap
@@ -34,13 +34,13 @@ pub struct HashSet[T] {
 
 ///|
 pub trait Hash {
-  hash(Self) -> UInt
+  fn hash(Self) -> UInt32
 }
 
 // Default hash implementations for common types
 
 ///|
-pub impl Hash for Int with hash(self : Int) -> UInt {
+pub impl Hash for Int32 with fn hash(self : Int32) -> UInt32 {
   let x = self.reinterpret_as_uint()
   let x = x ^ (x >> 16)
   let x = x * 0x85ebca6b_U
@@ -50,7 +50,7 @@ pub impl Hash for Int with hash(self : Int) -> UInt {
 }
 
 ///|
-pub impl Hash for String with hash(self : String) -> UInt {
+pub impl Hash for String with fn hash(self : String) -> UInt32 {
   let mut hash = 2166136261_U
   let bytes = @utf8.encode(self)
   for i = 0; i < bytes.length(); i = i + 1 {
@@ -61,7 +61,7 @@ pub impl Hash for String with hash(self : String) -> UInt {
 }
 
 ///|
-pub impl Hash for UInt with hash(self : UInt) -> UInt {
+pub impl Hash for UInt32 with fn hash(self : UInt32) -> UInt32 {
   let x = self
   let x = x ^ (x >> 16)
   let x = x * 0x85ebca6b_U
@@ -73,7 +73,7 @@ pub impl Hash for UInt with hash(self : UInt) -> UInt {
 // Utility function to find next power of 2
 
 ///|
-fn next_power_of_2(n : Int) -> Int {
+fn next_power_of_2(n : Int32) -> Int32 {
   if n <= 1 {
     return 1
   }
@@ -87,7 +87,7 @@ fn next_power_of_2(n : Int) -> Int {
 // Hash a key and get the control byte
 
 ///|
-fn[K : Hash] hash_key(key : K) -> (UInt, Control) {
+fn[K : Hash] hash_key(key : K) -> (UInt32, Control) {
   let hash = key.hash()
   let ctrl_hash = hash & 0x7F_U
   (hash, Control::Full(ctrl_hash))
@@ -107,7 +107,7 @@ pub fn[K, V] HashMap::new() -> HashMap[K, V] {
 }
 
 ///|
-pub fn[K, V] HashMap::with_capacity(capacity : Int) -> HashMap[K, V] {
+pub fn[K, V] HashMap::with_capacity(capacity : Int32) -> HashMap[K, V] {
   let cap = if capacity < 16 { 16 } else { next_power_of_2(capacity) }
   {
     buckets: Array::make(cap, None),
@@ -118,7 +118,7 @@ pub fn[K, V] HashMap::with_capacity(capacity : Int) -> HashMap[K, V] {
 }
 
 ///|
-pub fn[K, V] HashMap::len(self : HashMap[K, V]) -> Int {
+pub fn[K, V] HashMap::len(self : HashMap[K, V]) -> Int32 {
   self.len
 }
 
@@ -128,7 +128,7 @@ pub fn[K, V] HashMap::is_empty(self : HashMap[K, V]) -> Bool {
 }
 
 ///|
-pub fn[K, V] HashMap::capacity(self : HashMap[K, V]) -> Int {
+pub fn[K, V] HashMap::capacity(self : HashMap[K, V]) -> Int32 {
   self.capacity
 }
 
@@ -144,7 +144,10 @@ pub fn[K, V] HashMap::clear(self : HashMap[K, V]) -> Unit {
 // Find the slot for a key
 
 ///|
-fn[K : Hash + Eq, V] HashMap::find_slot(self : HashMap[K, V], key : K) -> Int? {
+fn[K : Hash + Eq, V] HashMap::find_slot(
+  self : HashMap[K, V],
+  key : K,
+) -> Int32? {
   let (hash, target_ctrl) = hash_key(key)
   let mask = self.capacity - 1
   let mut pos = (hash & mask.reinterpret_as_uint()).reinterpret_as_int()
@@ -175,7 +178,7 @@ fn[K : Hash + Eq, V] HashMap::find_slot(self : HashMap[K, V], key : K) -> Int? {
 // Find an empty slot for insertion
 
 ///|
-fn[K, V] HashMap::find_empty_slot(self : HashMap[K, V], hash : UInt) -> Int {
+fn[K, V] HashMap::find_empty_slot(self : HashMap[K, V], hash : UInt32) -> Int32 {
   let mask = self.capacity - 1
   let mut pos = (hash & mask.reinterpret_as_uint()).reinterpret_as_int()
   let mut count = 0
@@ -345,16 +348,16 @@ pub fn[K, V] HashMap::entries(self : HashMap[K, V]) -> Array[(K, V)] {
 
 ///|
 pub fn[T] HashSet::new() -> HashSet[T] {
-  { map: HashMap::new() }
+  { map: HashMap::new(), }
 }
 
 ///|
-pub fn[T] HashSet::with_capacity(capacity : Int) -> HashSet[T] {
-  { map: HashMap::with_capacity(capacity) }
+pub fn[T] HashSet::with_capacity(capacity : Int32) -> HashSet[T] {
+  { map: HashMap::with_capacity(capacity), }
 }
 
 ///|
-pub fn[T] HashSet::len_set(self : HashSet[T]) -> Int {
+pub fn[T] HashSet::len_set(self : HashSet[T]) -> Int32 {
   self.map.len()
 }
 
@@ -364,7 +367,7 @@ pub fn[T] HashSet::is_empty_set(self : HashSet[T]) -> Bool {
 }
 
 ///|
-pub fn[T] HashSet::capacity_set(self : HashSet[T]) -> Int {
+pub fn[T] HashSet::capacity_set(self : HashSet[T]) -> Int32 {
   self.map.capacity()
 }
 
