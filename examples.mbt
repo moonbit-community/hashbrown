@@ -7,7 +7,7 @@ pub fn example_hashmap_basic() -> Unit {
   println("=== HashMap Basic Usage ===")
 
   // Create a new HashMap
-  let map : HashMap[String, Int] = HashMap::new()
+  let map : HashMap[String, Int32] = HashMap::new()
 
   // Insert some key-value pairs
   ignore(map.insert("apple", 5))
@@ -54,7 +54,7 @@ pub fn example_hashmap_custom() -> Unit {
   ignore(names.insert("jane", "Jane Smith"))
 
   // Integer to Boolean mapping
-  let flags : HashMap[Int, Bool] = HashMap::new()
+  let flags : HashMap[Int32, Bool] = HashMap::new()
   ignore(flags.insert(1, true))
   ignore(flags.insert(2, false))
   ignore(flags.insert(3, true))
@@ -118,7 +118,7 @@ pub fn example_hashset_basic() -> Unit {
 ///|
 pub fn example_iteration() -> Unit {
   println("=== Iteration Examples ===")
-  let map : HashMap[Int, String] = HashMap::new()
+  let map : HashMap[Int32, String] = HashMap::new()
   ignore(map.insert(1, "one"))
   ignore(map.insert(2, "two"))
   ignore(map.insert(3, "three"))
@@ -152,7 +152,7 @@ pub fn example_iteration() -> Unit {
 ///|
 pub fn example_performance() -> Unit {
   println("=== Performance Demonstration ===")
-  let map : HashMap[Int, Int] = HashMap::new()
+  let map : HashMap[Int32, Int32] = HashMap::new()
 
   // Insert many items
   let n = 1000
@@ -187,7 +187,7 @@ pub fn example_performance() -> Unit {
 ///|
 pub fn example_collision_handling() -> Unit {
   println("=== Collision Handling ===")
-  let map : HashMap[Int, String] = HashMap::new()
+  let map : HashMap[Int32, String] = HashMap::new()
 
   // Insert values that might cause hash collisions
   let collision_keys = [0, 16, 32, 48, 64, 80, 96, 112]
@@ -220,7 +220,7 @@ pub fn example_collision_handling() -> Unit {
 ///|
 pub fn example_word_count() -> Unit {
   println("=== Word Counting Example ===")
-  let word_count : HashMap[String, Int] = HashMap::new()
+  let word_count : HashMap[String, Int32] = HashMap::new()
   let text = [
     "the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "the",
     "fox",

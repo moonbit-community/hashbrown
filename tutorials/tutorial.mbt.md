@@ -20,7 +20,7 @@ Let's start with a simple example of creating and using a HashMap:
 ```mbt nocheck
 ///|
 test "basic_hashmap_usage" {
-  let map : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
 
   // Insert some key-value pairs
   ignore(map.insert("apples", 5))
@@ -38,7 +38,7 @@ test "basic_hashmap_usage" {
 ```mbt nocheck
 ///|
 test "insert_and_retrieve" {
-  let scores : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let scores : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
 
   // Insert returns the previous value if key existed
   match scores.insert("Alice", 95) {
@@ -59,7 +59,7 @@ test "insert_and_retrieve" {
 ```mbt nocheck
 ///|
 test "checking_keys" {
-  let inventory : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let inventory : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
   ignore(inventory.insert("widgets", 42))
 
   if inventory.contains_key("widgets") {
@@ -114,7 +114,7 @@ test "string_translations" {
 ```mbt nocheck
 ///|
 test "fibonacci_sequence" {
-  let fibonacci : @hashbrown.HashMap[Int, Int] = @hashbrown.HashMap::new()
+  let fibonacci : @hashbrown.HashMap[Int32, Int32] = @hashbrown.HashMap::new()
   ignore(fibonacci.insert(1, 1))
   ignore(fibonacci.insert(2, 1))
   ignore(fibonacci.insert(3, 2))
@@ -170,7 +170,7 @@ test "iteration_example" {
 ///|
 test "capacity_management" {
   // Create with specific initial capacity
-  let large_map : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(
+  let large_map : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::with_capacity(
     1000,
   )
   println("Initial capacity: \{large_map.capacity()}")
@@ -191,7 +191,7 @@ test "capacity_management" {
 ```mbt nocheck
 ///|
 test "clearing_map" {
-  let temp_data : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let temp_data : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
   ignore(temp_data.insert("a", 1))
   ignore(temp_data.insert("b", 2))
   ignore(temp_data.insert("c", 3))
@@ -263,7 +263,7 @@ test "set_operations" {
 ```mbt nocheck
 ///|
 test "set_to_array" {
-  let numbers : @hashbrown.HashSet[Int] = @hashbrown.HashSet::new()
+  let numbers : @hashbrown.HashSet[Int32] = @hashbrown.HashSet::new()
   ignore(numbers.insert_set(1))
   ignore(numbers.insert_set(3))
   ignore(numbers.insert_set(5))
@@ -283,8 +283,8 @@ test "set_to_array" {
 
 ```mbt nocheck
 ///|
-fn count_words(text : Array[String]) -> @hashbrown.HashMap[String, Int] {
-  let word_count : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+fn count_words(text : Array[String]) -> @hashbrown.HashMap[String, Int32] {
+  let word_count : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
 
   for i = 0; i < text.length(); i = i + 1 {
     let word = text[i]
@@ -319,12 +319,12 @@ test "word_frequency_counter" {
 ///|
 struct Cache[K, V] {
   data : @hashbrown.HashMap[K, V]
-  max_size : Int
+  max_size : Int32
 }
 
 ///|
-fn[K, V] Cache::new(max_size : Int) -> Cache[K, V] {
-  { data: @hashbrown.HashMap::new(), max_size }
+fn[K, V] Cache::new(max_size : Int32) -> Cache[K, V] {
+  { data: @hashbrown.HashMap::new(), max_size, }
 }
 
 ///|
@@ -350,7 +350,7 @@ fn[K : @hashbrown.Hash + Eq, V] Cache::put_cached(
 
 ///|
 test "caching_system" {
-  let cache : Cache[String, Int] = Cache::new(3)
+  let cache : Cache[String, Int32] = Cache::new(3)
   cache.put_cached("a", 1)
   cache.put_cached("b", 2)
   cache.put_cached("c", 3)
@@ -368,7 +368,7 @@ test "caching_system" {
 ///|
 struct VisitorTracker {
   visitors : @hashbrown.HashSet[String]
-  visit_count : @hashbrown.HashMap[String, Int]
+  visit_count : @hashbrown.HashMap[String, Int32]
 }
 
 ///|
@@ -395,7 +395,7 @@ fn VisitorTracker::record_visit(
 }
 
 ///|
-fn VisitorTracker::get_visitor_stats(self : VisitorTracker) -> (Int, Int) {
+fn VisitorTracker::get_visitor_stats(self : VisitorTracker) -> (Int32, Int32) {
   let unique_visitors = self.visitors.len_set()
   let total_visits = {
     let mut total = 0
@@ -429,7 +429,7 @@ test "visitor_tracker" {
 test "initial_capacity_performance" {
   // If you know approximately how many items you'll store,
   // pre-allocate capacity to avoid resizing
-  let large_dataset : @hashbrown.HashMap[Int, String] = @hashbrown.HashMap::with_capacity(
+  let large_dataset : @hashbrown.HashMap[Int32, String] = @hashbrown.HashMap::with_capacity(
     10000,
   )
 
@@ -450,9 +450,9 @@ test "initial_capacity_performance" {
 ```mbt nocheck
 ///|
 fn batch_insert_numbers(
-  map : @hashbrown.HashMap[Int, Int],
-  start : Int,
-  end : Int,
+  map : @hashbrown.HashMap[Int32, Int32],
+  start : Int32,
+  end : Int32,
 ) -> Unit {
   for i = start; i < end; i = i + 1 {
     ignore(map.insert(i, i * i))
@@ -461,7 +461,7 @@ fn batch_insert_numbers(
 
 ///|
 test "batch_operations" {
-  let numbers : @hashbrown.HashMap[Int, Int] = @hashbrown.HashMap::new()
+  let numbers : @hashbrown.HashMap[Int32, Int32] = @hashbrown.HashMap::new()
   batch_insert_numbers(numbers, 0, 1000)
   println("Inserted 1000 numbers efficiently")
 }
@@ -492,7 +492,7 @@ test "capacity_best_practices" {
 ```mbt nocheck
 ///|
 test "option_handling" {
-  let lookup : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let lookup : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
   ignore(lookup.insert("key", 42))
 
   // Good: Handle both cases
@@ -516,7 +516,7 @@ test "option_handling" {
 ///|
 test "choosing_data_structure" {
   // Use HashMap when you need key-value associations
-  let user_scores : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let user_scores : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
   ignore(user_scores.insert("alice", 95))
 
   // Use HashSet when you only need unique values
@@ -536,14 +536,14 @@ test "choosing_data_structure" {
 // Function showing proper type annotation
 
 ///|
-fn create_typed_map() -> @hashbrown.HashMap[String, Int] {
+fn create_typed_map() -> @hashbrown.HashMap[String, Int32] {
   @hashbrown.HashMap::new() // Type inferred from return type
 }
 
 ///|
 test "type_inference_solutions" {
   // Solution: Provide explicit types
-  let map : @hashbrown.HashMap[String, Int] = @hashbrown.HashMap::new()
+  let map : @hashbrown.HashMap[String, Int32] = @hashbrown.HashMap::new()
 
   // Or use function with explicit return type
   let map2 = create_typed_map()
